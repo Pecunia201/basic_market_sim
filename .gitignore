@@ -1,0 +1,5 @@
+# Ignore basic_market_sim.exe
+basic_market_sim.exe
+
+# Ignore .vscode folder
+.vscode/
