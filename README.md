@@ -31,7 +31,7 @@ To run this simulation:
    
    After compilation, run the program:
    ```
-   .\basic_market_sim
+   .\main
    ```
 
 ## Planned Features
