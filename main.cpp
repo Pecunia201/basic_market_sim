@@ -7,7 +7,7 @@
 
 class Constants {
 public:
-    static const char currency_symbol = 156;
+    static const char currency_symbol = 163;
     static const int iterations = 10;
 };
 
