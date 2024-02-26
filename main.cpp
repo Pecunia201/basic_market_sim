@@ -5,6 +5,12 @@
 #include <random>
 #include <ctime>
 
+class Constants {
+public:
+    static const char currency_symbol = 156;
+    static const int iterations = 10;
+};
+
 class Asset {
 private:
     const std::string ticker;
@@ -119,6 +125,7 @@ public:
 
     // Display portfolio
     void displayPortfolio(const Market& market, int id) {
+        const char currency_symbol = 156;
         std::cout << "Trader " << id << "'s Portfolio: " << "\n";
         double totalProfit = 0;
         // Iterate through portfolio and display each asset by finding the corresponding asset in the marketa and calculating profit
@@ -130,20 +137,21 @@ public:
             double profit = (foundAsset->getPrice() - asset->getPrice()) * asset->getQuantity();
 
             // Display asset and profit
-            std::cout << "bought " << asset->getQuantity() << " " << asset->getTicker() << " shares for £" << asset->getPrice() << ", position is now worth £" << foundAsset->getPrice() << " for a profit of £" << profit << "\n";
+            std::cout << "bought " << asset->getQuantity() << " " << asset->getTicker() << " shares for " << currency_symbol << asset->getPrice() << ", position is now worth " << currency_symbol << foundAsset->getPrice() << " for a profit of " << currency_symbol << profit << "\n";
 
             // Update total profit
             totalProfit += profit;
         }
-        std::cout << "Total portfolio value: £" << totalProfit << "\n";
+        std::cout << "Total portfolio value: " << currency_symbol << totalProfit << "\n";
     }
 };
 
 class Order {
 public:
     // Execute order, move asset to portfolio
+    char currency_symbol = 156;
     void executeOrder(Portfolio& portfolio, std::unique_ptr<Asset> asset, int id) {
-        std::cout << "Trader " << id << " | bought " << asset->getQuantity() << " " << asset->getTicker() << " @ £"  << asset->getPrice() << "\n";
+        std::cout << "Trader " << id << " | bought " << asset->getQuantity() << " " << asset->getTicker() << " @ " << currency_symbol << asset->getPrice() << "\n";
         portfolio.updatePortfolio(std::move(asset));
     }
 };
@@ -211,7 +219,7 @@ int main() {
     Trader trader2 = Trader(2);
     Simulation simulation;
 
-    // Add assets to market
+    // Add assets to market, clean this up later
     market.addAsset(std::make_unique<Asset>("AAPL", 189.14, 0));
     market.addAsset(std::make_unique<Asset>("MSFT", 401.54, 0));
     market.addAsset(std::make_unique<Asset>("GOOGL", 141.42, 0));
@@ -223,7 +231,8 @@ int main() {
     market.addAsset(std::make_unique<Asset>("SPX", 5000.00, 0));
 
     // Run simulation
-    int iterations = 10;
+    char currency_symbol = Constants::currency_symbol;
+    int iterations = Constants::iterations;
     simulation.run(market, trader1, trader2, iterations, gen1, gen2);
 
     // Display results
